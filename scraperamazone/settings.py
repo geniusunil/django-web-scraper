@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'mainscrap',
+    'django_cron',
 ]
 
 MIDDLEWARE = [
@@ -36,6 +37,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+CRON_CLASSES = [
+    "my_app.cron.MyCronJob",
 ]
 
 ROOT_URLCONF = 'scraperamazone.urls'
@@ -111,3 +116,6 @@ STATIC_ROOT = "/static/"
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

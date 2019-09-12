@@ -10,10 +10,11 @@
     <div class="container">
         <div class="row justify-content-md-center">
             <div class="col-md-4 text-center mt-5">
-                <form method="POST" action="">{% csrf_token %}
-                    <input class="form-control" type="text" id="url" name="url">
-                    <input class="form-control" type="text" id="username" name="username">
-                    <button type="submit" class="btn btn-primary" name="submit">Scrap</button> 
+                <h2>Login</h2>
+                <form method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+                    <button style="background-color:#F4EB16; color:blue" class="btn btn-outline-info" type="submit">Login</button>
                 </form>
             </div>
         </div>

@@ -1,3 +1,8 @@
 from django.db import models
 
-# Create your models here.
+class Data(models.Model):
+    username = models.CharField(max_length=40)
+    csv_file = models.FileField(upload_to='documents/')
+
+    def __str__(self):
+        return self.username    
