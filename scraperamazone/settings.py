@@ -27,7 +27,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'mainscrap',
     'django_cron',
+    'django_registration',
+    'user',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -119,3 +122,4 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
