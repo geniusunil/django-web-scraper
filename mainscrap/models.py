@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 
 class Data(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE,default=1)
     filename = models.CharField(max_length=40,blank=False)
     csv_file = models.FileField(upload_to='documents/',blank=False)
 

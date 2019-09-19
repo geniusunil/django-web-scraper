@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
-        <div class="container">
-        <div class="row justify-content-md-center">
+<div class="container">
+    <div class="row justify-content-md-center">
         <div class="col-md-4">
-        <form method="POST" action="">{% csrf_token %}
-            <h1 class="h3 mb-3 font-weight-normal">Amazone Scraper</h1>
-            <input type="text" id="url" name="url" class="form-control" placeholder="URL" required autofocus>
-            <button class="mt-3 btn btn-lg btn-primary btn-block" type="submit">Scrap</button>
-        </form>
+            <form method="POST" action="">{% csrf_token %}
+                <h1 class="mb-3 display-4">Amazone Scraper</h1>
+                <input type="text" id="url" name="url" class="form-control" placeholder="URL" required autofocus>
+                <button class="mt-3 btn btn-lg btn-primary btn-block" type="submit">Scrap</button>
+            </form>
+            <p class="mt-3"><a href="upload">Upload</a> Your File For Updates Regarding</p>
         </div>
-        </div>
-        </div>
-{% endblock %}        
-    
+    </div>
+</div>
+{% endblock %}

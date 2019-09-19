@@ -34,10 +34,11 @@ def index(request):
 
 def upload(request):
     if request.method == "POST":
-        u = request.user
+
         filename = request.POST.get('filename','')
         csv_file = request.POST.get('csv_file','')
-        data = Data(filename=filename, csv_file=csv_file)
+        user = request.user
+        data = Data(filename=filename, csv_file=csv_file, user=user)
         data.save()
     return render(request, 'upload.html')
 
