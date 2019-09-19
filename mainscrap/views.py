@@ -15,8 +15,8 @@ def index(request):
 
         url  = request.POST.get('url', '')
 
-        r = requests.get(url)           
-        soup = BeautifulSoup(r.content, features="lxml")    
+        r = requests.get(url)
+        soup = BeautifulSoup(r.content, features="lxml")
         p_name = soup.find_all("h2",attrs={"class": "a-size-mini"})
         p_price = soup.find_all("span",attrs={"class": "a-price-whole"})
 
@@ -32,7 +32,17 @@ def index(request):
 
     return render(request, 'index.html')
 
-    
+def upload(request):
+    if request.method == "POST":
+        u = request.user
+        filename = request.POST.get('filename','')
+        csv_file = request.POST.get('csv_file','')
+        data = Data(filename=filename, csv_file=csv_file)
+        data.save()
+    return render(request, 'upload.html')
+
+
+
 
 # class MyCronJob(CronJobBase):
 #     RUN_EVERY_MINS = 1440
