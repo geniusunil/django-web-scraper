@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib import auth
 from mainscrap.models import Data
 
+
 def logingin(request):
 
     if request.method == 'POST':
@@ -45,6 +46,9 @@ def logout_view(request):
     return render(request, "logout.html")
 
 def accounts(request):
+    user = Data.objects.values('user')
+
     main_data = Data.objects.all()
-    #parms = {}
-    return render(request, 'accounts.html',{'name' : request.user.username, 'main_data': main_data})
+
+    dict = {'main_data':main_data, 'name' : request.user.username}
+    return render(request, 'accounts.html',dict)
