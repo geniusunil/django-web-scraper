@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib import auth
 from mainscrap.models import Data
+from django.core.exceptions import ObjectDoesNotExist
 
 
 def logingin(request):
@@ -17,7 +18,8 @@ def logingin(request):
             login(request, user)
             return redirect('/')
         else:
-            return redirect('/signup')
+            eroor = "Don't have an account"
+            return redirect('/signup',error)
 
     return render(request, 'login.html')
 
@@ -40,15 +42,15 @@ def signup(request):
 
 def logout_view(request):
     logout(request)
-
     if logout:
         return redirect('/login')
     return render(request, "logout.html")
 
 def accounts(request):
-    user = Data.objects.values('user')
-
-    main_data = Data.objects.all()
-
-    dict = {'main_data':main_data, 'name' : request.user.username}
-    return render(request, 'accounts.html',dict)
+    if request.user.is_authenticated:
+        main_data = Data.objects.filter(user=request.user)
+        dict = {'main_data': main_data,'name' : request.user.username}
+    else:
+        none =''
+        dict = {'none':none}
+    return render(request, 'accounts.html', dict)

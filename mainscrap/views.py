@@ -8,7 +8,9 @@ from . import forms
 from . import models
 from .models import Data
 from . forms import scrap
-from django_cron import CronJobBase, Schedule
+import pandas as pd
+
+
 
 def index(request):
     if request.method == "POST":
@@ -19,18 +21,31 @@ def index(request):
         soup = BeautifulSoup(r.content, features="lxml")
         p_name = soup.find_all("h2",attrs={"class": "a-size-mini"})
         p_price = soup.find_all("span",attrs={"class": "a-price-whole"})
+        p_image = soup.findAll('img', {'class':'s-image','src':re.compile('.jpg')})
 
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="product_file.csv"'
 
-        for name,price in zip(p_name,p_price):
+
+        for name,price,image in zip(p_name,p_price,p_image):
             writer = csv.writer(response)
-            writer.writerow([name.text, price.text])
+            row = writer.writerow([name.text, price.text,image['src']])
 
-        return response
+            name_data  = [data.text for data in p_name]
+            price_data = [data.text for data in p_price]
+            image_data = [data['src'] for data in p_image]
+
+            dec = {'name':name_data, 'price':price_data, 'image':image_data}
+
+        # if request.GET.get('download') == 'download':
+        #     return respons
+
+    else:
+        dec = {}
 
 
-    return render(request, 'index.html')
+
+    return render(request, 'index.html',dec)
 
 def upload(request):
     if request.method == "POST":
@@ -41,14 +56,3 @@ def upload(request):
         data = Data(filename=filename, csv_file=csv_file, user=user)
         data.save()
     return render(request, 'upload.html')
-
-
-
-
-# class MyCronJob(CronJobBase):
-#     RUN_EVERY_MINS = 1440
-
-#     schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
-#     code = 'my_app.my_cron_job'
-
-#     def do(self):

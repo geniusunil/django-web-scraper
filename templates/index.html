@@ -6,10 +6,31 @@
             <form method="POST" action="">{% csrf_token %}
                 <h1 class="mb-3 display-4">Amazone Scraper</h1>
                 <input type="text" id="url" name="url" class="form-control" placeholder="URL" required autofocus>
-                <button class="mt-3 btn btn-lg btn-primary btn-block" type="submit">Scrap</button>
+                <button class="mt-3 btn btn-lg btn-primary btn-block" type="submit" id="submit" name='submit'>Scrap</button>
             </form>
             <p class="mt-3"><a href="upload">Upload</a> Your File For Updates Regarding</p>
         </div>
+    </div>
+    <div class="row">
+      <table>
+        <tr>
+          <td>
+            {% for name in name %}
+              {{name}}<br>
+            {% endfor %}
+          </td>
+          <td>
+            {% for price in price %}
+                {{price}}<br>
+            {% endfor %}
+          </td>
+          <td>
+            {% for image in image %}
+              <img src="{{image}}" alt=""><br>
+            {% endfor %}
+          </td>
+          </tr>
+      </table>
     </div>
 </div>
 {% endblock %}
