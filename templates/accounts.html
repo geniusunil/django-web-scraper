@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container">
     <div class="row justify-content-md-center">
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="jumbotron mt-5">
               <h1 class="display-4">My Account</h1>
               {% if request.user.is_authenticated %}
@@ -12,9 +12,11 @@
               {% for filename in main_data %}
               <p class="text-info">{{filename}}</p>
               {% endfor %}
+              <div class="row justify-content-md-center">
               <form action="/logout">
-                  <button class="mt-3 btn btn-lg btn-primary btn-block" type="submit">Logout</button>
+                  <button class="mt-3 col-md-12 btn btn-lg btn-danger btn-block " type="submit">Logout</button>
               </form>
+              </div>
               {% else %}
                <h3 class="font-weight-light text-danger">Please Login First</h3>
               {% endif %}
