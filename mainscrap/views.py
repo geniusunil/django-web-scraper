@@ -8,14 +8,14 @@ from . import forms
 from . import models
 from .models import Data
 from . forms import scrap
-import pandas as pd
-
+import pandas as pd 
 
 
 def index(request):
     if request.method == "POST":
 
         url  = request.POST.get('url', '')
+        down = request.POST.get('download','')
 
         r = requests.get(url)
         soup = BeautifulSoup(r.content, features="lxml")
@@ -29,16 +29,18 @@ def index(request):
 
         for name,price,image in zip(p_name,p_price,p_image):
             writer = csv.writer(response)
-            row = writer.writerow([name.text, price.text,image['src']])
+            row = writer.writerow([image['src'],name.text, price.text,])
 
             name_data  = [data.text for data in p_name]
             price_data = [data.text for data in p_price]
             image_data = [data['src'] for data in p_image]
+            dec = {'name':name_data, 'price':price_data, 'image':image_data, 'url':url}
 
-            dec = {'name':name_data, 'price':price_data, 'image':image_data}
+        
+        if down:
+            return response
 
-        # if request.GET.get('download') == 'download':
-        #     return respons
+        
 
     else:
         dec = {}
@@ -52,7 +54,7 @@ def upload(request):
 
         filename = request.POST.get('filename','')
         csv_file = request.POST.get('csv_file','')
-        user = request.user
-        data = Data(filename=filename, csv_file=csv_file, user=user)
+        user     = request.user
+        data     = Data(filename=filename, csv_file=csv_file, user=user)
         data.save()
     return render(request, 'upload.html')

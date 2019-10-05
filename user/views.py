@@ -18,7 +18,7 @@ def logingin(request):
             login(request, user)
             return redirect('/')
         else:
-            eroor = "Don't have an account"
+            error = "Don't have an account"
             return redirect('/signup',error)
 
     return render(request, 'login.html')
