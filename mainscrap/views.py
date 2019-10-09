@@ -1,5 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render
 import requests
 from bs4 import BeautifulSoup
 import csv
@@ -35,7 +35,6 @@ def index(request):
             image_data = [data['src'] for data in p_image]
             dec = {'name':name_data, 'price':price_data, 'image':image_data, 'url':url}
 
-        
         return render(request,'data.html', dec)
 
     return render(request, 'index.html')

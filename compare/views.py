@@ -31,7 +31,7 @@ def comp(request):
 		for line in updated_csv_list:
 			writer.writerow(line)
 
-			return response
+		return response
 
 	return render(request,'compare.html')
 
