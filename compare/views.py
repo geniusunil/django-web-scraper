@@ -9,8 +9,8 @@ def comp(request):
 		file1  = request.FILES['file1'].read().decode("utf-8")
 		file2  = request.FILES['file2'].read().decode("utf-8")
 
-		# response = HttpResponse(content_type='text/csv')
-		# response['Content-Disposition'] = 'attachment; filename="update.csv"'
+		response = HttpResponse(content_type='text/csv')
+		response['Content-Disposition'] = 'attachment; filename="update.csv"'
 		
 		lines = file1.split("\n")
 		
@@ -31,7 +31,7 @@ def comp(request):
 		for line in updated_csv_list:
 			writer.writerow(line)
 
-			#return response
+			return response
 
 	return render(request,'compare.html')
 
