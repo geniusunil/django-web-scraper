@@ -1,5 +1,5 @@
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, redirect, reverse
 import requests
 from bs4 import BeautifulSoup
 import csv
@@ -9,13 +9,12 @@ from . import models
 from .models import Data
 from . forms import scrap
 import pandas as pd 
-
+from urllib.parse import urlencode
 
 def index(request):
     if request.method == "POST":
 
         url  = request.POST.get('url', '')
-        down = request.POST.get('download','')
 
         r = requests.get(url)
         soup = BeautifulSoup(r.content, features="lxml")
@@ -37,17 +36,34 @@ def index(request):
             dec = {'name':name_data, 'price':price_data, 'image':image_data, 'url':url}
 
         
-        if down:
-            return response
+        return render(request,'data.html', dec)
 
-        
-
-    else:
-        dec = {}
+    return render(request, 'index.html')
 
 
+def data(request):
 
-    return render(request, 'index.html',dec)
+    url  = request.POST.get('url', '')
+    r = requests.get(url)
+    soup = BeautifulSoup(r.content, features="lxml")
+    p_name = soup.find_all("h2",attrs={"class": "a-size-mini"})
+    p_price = soup.find_all("span",attrs={"class": "a-price-whole"})
+    p_image = soup.findAll('img', {'class':'s-image','src':re.compile('.jpg')})
+
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="product_file.csv"'
+
+
+    for name,price,image in zip(p_name,p_price,p_image):
+        writer = csv.writer(response)
+        row = writer.writerow([image['src'],name.text, price.text,])
+
+        name_data  = [data.text for data in p_name]
+        price_data = [data.text for data in p_price]
+        image_data = [data['src'] for data in p_image]
+
+    return response
+    
 
 def upload(request):
     if request.method == "POST":

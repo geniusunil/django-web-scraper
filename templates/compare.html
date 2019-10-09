@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Comparision{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-md-6">
+            <form method="POST" action="" enctype="multipart/form-data">{% csrf_token %}
+                <h1 class="mb-3 display-4 text-light">Comparision</h1>
+                <input type="file" id="file1" name="file1" class="form-control mt-3" required autofocus>
+                <input type="file" id="file2" name="file2" class="form-control mt-3" required autofocus>
+                <button class="mt-3 col-md-3 btn btn-lg btn-info btn-block" type="submit">Compare</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

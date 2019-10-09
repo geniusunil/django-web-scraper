@@ -7,4 +7,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('mainscrap.urls')),
     path('',include('user.urls')),
+    path('',include('compare.urls')),
 ]
